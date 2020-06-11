@@ -1,29 +1,33 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import Router from "vue-router";
+// @ts-ignore
+import Home from "./views/Home.vue";
+// @ts-ignore
+import  Vault from "./components/Vault.vue"
+// @ts-ignore
+import Dashboard from "./views/Dashboard.vue";
+import { authGuard } from "@bcwdev/auth0-vue";
 
-Vue.use(VueRouter)
+Vue.use(Router);
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/About.vue')
+export default new Router({
+  routes: [
+    // {
+    //   path: "/",
+    //   name: "home",
+    //   component: Home
+    // },
+    {
+      path: "/",
+      name: "dashboard",
+      component: Dashboard,
+      // beforeEnter: authGuard
+    },
+    {
+      path: "/vault",
+      name: "vault",
+      component: Vault,
+       beforeEnter: authGuard
     }
-  }
-]
-
-const router = new VueRouter({
-  routes
-})
-
-export default router
+  ]
+});
